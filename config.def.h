@@ -11,7 +11,7 @@ static const char *fonts[]          = {
   "FiraCode Nerd Font:size=10",
   "monospace:size=10"
 };
-static const char dmenufont[]       = "monospace:size=10";
+static const char dmenufont[]       = "FiraCode Nerd Font:size=10";
 
 static const char bg[]              = "#292d3e";
 static const char black[]           = "#000000";
@@ -23,12 +23,6 @@ static const char red[]             = "#e54978";
 static const char white[]           = "#d0d0d0";
 static const char green[]           = "#c3e88d";
 
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
-
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { white, bg,        white },
@@ -37,6 +31,7 @@ static const char *colors[][3]      = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+// static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -129,11 +124,13 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("brave")   },
 	{ MODKEY,                       XK_w,      spawn,          SHCMD("surf start.duckduckgo.com") },
 	{ MODKEY,                       XK_e,      spawn,          SHCMD("emacs")   },
+	{ MODKEY,                       XK_r,      spawn,          SHCMD("st -e ranger")  },
 
   // resizing gaps
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+	{ MODKEY,                       XK_g,      setgaps,        {.i = +8 } },
 
   // dmenu scripts
 	{ MODKEY,                       XK_s,      spawn,          SHCMD("/home/amitav/.local/bin/scripts")   },
