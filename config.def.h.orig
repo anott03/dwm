@@ -14,9 +14,8 @@ static const char *fonts[]          = {
 static const char dmenufont[]       = "FiraCode Nerd Font:size=10";
 
 static const char bg[]              = "#292d3e";
-static const char black[]           = "#292d3e";
+static const char black[]           = "#000000";
 static const char blue[]            = "#88aaff";
-static const char blue2[]           = "#81a1c1";
 static const char magenta[]         = "#c792ea";
 static const char orange[]          = "#ffcb6b";
 static const char dark_orange[]     = "#f07e3e";
@@ -24,20 +23,15 @@ static const char red[]             = "#e54978";
 static const char white[]           = "#d0d0d0";
 static const char green[]           = "#c3e88d";
 
-// TODO figure out how to use this to set dmenu color and accent color
-// const char (*accentColor)[8] = &green;
-
 static const char *colors[][3]      = {
-	/*               fg         bg             border   */
-	[SchemeNorm] = { white,     bg,            white },
-	[SchemeSel]  = { black,     blue2,         red   },
+	/*               fg         bg         border   */
+	[SchemeNorm] = { white, bg,        white },
+	[SchemeSel]  = { white, magenta,   red   },
 };
 
 /* tagging */
-// static const char *tags[] = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
-// static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 // static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
-static const char *tags[] = { "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -74,13 +68,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-p", "launch:", "-fn", dmenufont, "-nb", bg, "-nf", white, "-sb", blue2, "-sf", bg, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", white, "-sb", magenta, "-sf", bg, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *scriptscmd[]  = { "/home/amitav/.local/bin/amitav/scripts", blue2 };
-static const char *configscmd[]  = { "/home/amitav/.local/bin/amitav/configs", blue2 };
-static const char *unicodecmd[]  = { "/home/amitav/.local/bin/amitav/dmenuunicode", blue2 };
-
-#include "selfrestart.c"
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -144,9 +133,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_g,      setgaps,        {.i = +8 } },
 
   // dmenu scripts
-	{ MODKEY,                       XK_s,      spawn,          {.v = scriptscmd }  },
-	{ MODKEY,                       XK_c,      spawn,          {.v = configscmd }  },
-	{ MODKEY,                       XK_u,      spawn,          {.v = unicodecmd }  },
+	{ MODKEY,                       XK_s,      spawn,          SHCMD("/home/amitav/.local/bin/scripts")   },
+	{ MODKEY,                       XK_c,      spawn,          SHCMD("/home/amitav/.local/bin/configs")   },
 
   // workspaces
 	TAGKEYS(                        XK_1,                      0)
@@ -159,10 +147,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 
-  // quitting, locking, suspending, restarting
+  // quitting, locking, suspending
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
-  { MODKEY|ShiftMask,             XK_r,      self_restart,   {0} },
-	{ MODKEY,                       XK_q,      spawn,          SHCMD("/home/amitav/.local/bin/amitav/lock") },
+	{ MODKEY,                       XK_q,      spawn,          SHCMD("/home/amitav/.local/bin/lock") },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,          SHCMD("systemctl suspend") },
 };
 
@@ -182,3 +169,4 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
+
